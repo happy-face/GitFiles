@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>Git</title>
+<meta charset='utf-8'>
+<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible'>
+<link href='/favicon.ico' rel='shortcut icon' type='image/x-icon'>
+<link href="/assets/git-scm-d9f82641da808f568237431257688a8a.css" media="screen" rel="stylesheet" type="text/css" />
+<script src="/assets/modernizr-d3e827f2080047c7ad3b548064c7b594.js" type="text/javascript"></script>
+<script src="/assets/modernizr-tests-df0c07a43732eb029194e7afb938e925.js" type="text/javascript"></script>
+<!--[if (gte IE 6)&(lte IE 8)]>
+<script src='/javascripts/selectivizr-min.js' type='text/javascript'></script>
+<![endif]-->
+<script src="http://use.typekit.com/jsq2fql.js" type="text/javascript"></script>
+<script>
+  //<![CDATA[
+    try{Typekit.load();}catch(e){}
+  //]]>
+</script>
+<script type="text/javascript">var NREUMQ=NREUMQ||[];NREUMQ.push(["mark","firstbyte",new Date().getTime()]);</script></head>
+<body id='documentation'>
+<div class='inner'>
+<header>
+<a href="/"><img src="/images/logo.png" width="110" height="46" alt="Git" /></a>
+<span id='tagline'>
+<em>--</em>everything-is-local
+</span>
+<form action='/search/results' id='search'>
+<input id="search-text" name="search" placeholder="Search entire site..." autocomplete="off" type="text" />
+</form>
+<div id='search-results'></div>
+</header>
+
+</div>
+<div class='inner'>
+<div id='content-wrapper'>
+<aside class='sidebar'>
+<nav>
+<ul>
+<li><a href="/about" class="">About</a></li>
+<li>
+<a href="/doc" class="active">Documentation</a>
+<ul class='expanded'>
+<li><a href="/docs" class="">Reference</a></li>
+<li><a href="/book" class="active">Book</a></li>
+<li><a href="/videos" class="">Videos</a></li>
+<li><a href="/doc/ext" class="">External Links</a></li>
+</ul>
+</li>
+<li>
+<a href="/downloads" class="">Downloads</a>
+<ul class=''>
+<li><a href="/downloads/guis" class="">GUI Clients</a></li>
+<li><a href="/downloads/logos" class="">Logos</a></li>
+</ul>
+</li>
+<li><a href="/community" class="">Community</a></li>
+</ul>
+</nav>
+<hr class='sidebar'>
+  <p>Download this book in <a href="https://github.s3.amazonaws.com/media/progit.en.pdf">PDF</a>, <a href="https://github.s3.amazonaws.com/media/pro-git.en.mobi">mobi</a>, or <a href="https://github.s3.amazonaws.com/media/progit.epub">ePub</a> form for free.</p>
+
+  <p>
+This book is translated into 
+  <a href="/book/de">German</a>, 
+  <a href="/book/zh">Chinese</a>, 
+  <a href="/book/fr">French</a>,
+  <a href="/book/ja">Japanese</a> and 
+  <a href="/book/nl">Dutch</a>.
+</p>
+
+<p>
+Partial translations available in 
+  <a href="/book/ar">Arabic</a>,
+  <a href="/book/cs">Czech</a>,
+  <a href="/book/es">Spanish</a>,
+  <a href="/book/id">Indonesian</a>,
+  <a href="/book/it">Italian</a>,
+  <a href="/book/mk">Macedonian</a>,
+  <a href="/book/pl">Polish</a>,
+  <a href="/book/th">Thai</a> and
+  <a href="/book/ru">Russian</a>.
+</p>
+
+<hr class="sidebar"/>
+
+    <h4>Related Material</h4>
+  <ul class="related-material">
+      <li class="reference">
+      <strong><a href="/ref/git-add">git-add</a></strong>
+        in <a href="/docs">Reference</a>
+      </li>
+      <li class="reference">
+      <strong><a href="/ref/git-reset">git-reset</a></strong>
+        in <a href="/docs">Reference</a>
+      </li>
+      <li class="reference">
+      <strong><a href="/ref/git-status">git-status</a></strong>
+        in <a href="/docs">Reference</a>
+      </li>
+      <li class="reference">
+      <strong><a href="/ref/git-commit">git-commit</a></strong>
+        in <a href="/docs">Reference</a>
+      </li>
+      <li class="reference">
+      <strong><a href="/ref/git-checkout">git-checkout</a></strong>
+        in <a href="/docs">Reference</a>
+      </li>
+  </ul>
+
+
+</aside>
+<div id='content'>
+
+
+<div id='main' class="book">
+    <h1>2.4 Git Basics - Undoing Things</h1>
+  <div><h2>Undoing Things</h2>
+
+<p>At any stage, you may want to undo something. Here, we’ll review a few basic tools for undoing changes that you’ve made. Be careful, because you can’t always revert some of these undos. This is one of the few areas in Git where you may lose some work if you do it wrong.</p>
+
+<h3 id="Changing-Your-Last-Commit"><a href="#Changing-Your-Last-Commit">Changing Your Last Commit</a></h3>
+
+<p>One of the common undos takes place when you commit too early and possibly forget to add some files, or you mess up your commit message. If you want to try that commit again, you can run commit with the <code>--amend</code> option:</p>
+
+<pre><code>$ git commit --amend&#x000A;</code></pre>
+
+<p>This command takes your staging area and uses it for the commit. If you’ve made no changes since your last commit (for instance, you run this command immediately after your previous commit), then your snapshot will look exactly the same and all you’ll change is your commit message.</p>
+
+<p>The same commit-message editor fires up, but it already contains the message of your previous commit. You can edit the message the same as always, but it overwrites your previous commit.</p>
+
+<p>As an example, if you commit and then realize you forgot to stage the changes in a file you wanted to add to this commit, you can do something like this:</p>
+
+<pre><code>$ git commit -m &#39;initial commit&#39;&#x000A;$ git add forgotten_file&#x000A;$ git commit --amend&#x000A;</code></pre>
+
+<p>After these three commands, you end up with a single commit — the second commit replaces the results of the first.</p>
+
+<h3 id="Unstaging-a-Staged-File"><a href="#Unstaging-a-Staged-File">Unstaging a Staged File</a></h3>
+
+<p>The next two sections demonstrate how to wrangle your staging area and working directory changes. The nice part is that the command you use to determine the state of those two areas also reminds you how to undo changes to them. For example, let’s say you’ve changed two files and want to commit them as two separate changes, but you accidentally type <code>git add *</code> and stage them both. How can you unstage one of the two? The <code>git status</code> command reminds you:</p>
+
+<pre><code>$ git add .&#x000A;$ git status&#x000A;# On branch master&#x000A;# Changes to be committed:&#x000A;#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)&#x000A;#&#x000A;#       modified:   README.txt&#x000A;#       modified:   benchmarks.rb&#x000A;#&#x000A;</code></pre>
+
+<p>Right below the “Changes to be committed” text, it says &quot;use <code>git reset HEAD &lt;file&gt;...</code> to unstage&quot;. So, let’s use that advice to unstage the <code>benchmarks.rb</code> file:</p>
+
+<pre><code>$ git reset HEAD benchmarks.rb&#x000A;benchmarks.rb: locally modified&#x000A;$ git status&#x000A;# On branch master&#x000A;# Changes to be committed:&#x000A;#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)&#x000A;#&#x000A;#       modified:   README.txt&#x000A;#&#x000A;# Changed but not updated:&#x000A;#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)&#x000A;#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)&#x000A;#&#x000A;#       modified:   benchmarks.rb&#x000A;#&#x000A;</code></pre>
+
+<p>The command is a bit strange, but it works. The <code>benchmarks.rb</code> file is modified but once again unstaged.</p>
+
+<h3 id="Unmodifying-a-Modified-File"><a href="#Unmodifying-a-Modified-File">Unmodifying a Modified File</a></h3>
+
+<p>What if you realize that you don’t want to keep your changes to the <code>benchmarks.rb</code> file? How can you easily unmodify it — revert it back to what it looked like when you last committed (or initially cloned, or however you got it into your working directory)? Luckily, <code>git status</code> tells you how to do that, too. In the last example output, the unstaged area looks like this:</p>
+
+<pre><code># Changed but not updated:&#x000A;#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)&#x000A;#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)&#x000A;#&#x000A;#       modified:   benchmarks.rb&#x000A;#&#x000A;</code></pre>
+
+<p>It tells you pretty explicitly how to discard the changes you’ve made (at least, the newer versions of Git, 1.6.1 and later, do this — if you have an older version, we highly recommend upgrading it to get some of these nicer usability features). Let’s do what it says:</p>
+
+<pre><code>$ git checkout -- benchmarks.rb&#x000A;$ git status&#x000A;# On branch master&#x000A;# Changes to be committed:&#x000A;#   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)&#x000A;#&#x000A;#       modified:   README.txt&#x000A;#&#x000A;</code></pre>
+
+<p>You can see that the changes have been reverted. You should also realize that this is a dangerous command: any changes you made to that file are gone — you just copied another file over it. Don’t ever use this command unless you absolutely know that you don’t want the file. If you just need to get it out of the way, we’ll go over stashing and branching in the next chapter; these are generally better ways to go.</p>
+
+<p>Remember, anything that is committed in Git can almost always be recovered. Even commits that were on branches that were deleted or commits that were overwritten with an <code>--amend</code> commit can be recovered (see <em>Chapter 9</em> for data recovery). However, anything you lose that was never committed is likely never to be seen again.</p>
+
+<div id='nav'><a href='/book/en/Git-Basics-Viewing-the-Commit-History'>prev</a> | <a href='/book/en/Git-Basics-Working-with-Remotes'>next</a></div></div>
+</div>
+
+</div>
+</div>
+<footer>
+<div class='site-source'>
+This <a href="https://github.com/github/gitscm-next/blob/master/README.md#license">open sourced</a> site is <a href="https://github.com/github/gitscm-next">hosted on GitHub.</a><br>
+Patches, suggestions, and comments are welcome.
+</div>
+<div class='sfc-member'>
+Git is a member of the <a href="/sfc">Software Freedom Conservancy</a>
+</div>
+</footer>
+<script src="/assets/jquery-1.7.1.min-c6e32927cb89404bbbdf1f89220a6cb7.js" type="text/javascript"></script>
+<script src="/assets/jquery-ui-1.8.18.custom.min-5d0cddabbbc95f0c9ff5f0ca27d8ea4d.js" type="text/javascript"></script>
+<script src="/assets/jquery.defaultvalue-b902139187bc4fe32c1bd76766f620c4.js" type="text/javascript"></script>
+<script src="/assets/session.min-90313c1a078535d0f6033266fd2b7aff.js" type="text/javascript"></script>
+<script src="/assets/site-6ecc9428f38d6cf363cf00a0d58d4ea6.js" type="text/javascript"></script>
+
+</div>
+<script type="text/javascript">if (!NREUMQ.f) { NREUMQ.f=function() {
+NREUMQ.push(["load",new Date().getTime()]);
+var e=document.createElement("script");
+e.type="text/javascript";e.async=true;e.src="https://d1ros97qkrwjf5.cloudfront.net/42/eum/rum.js";
+document.body.appendChild(e);
+if(NREUMQ.a)NREUMQ.a();
+};
+NREUMQ.a=window.onload;window.onload=NREUMQ.f;
+};
+NREUMQ.push(["nrfj","beacon-1.newrelic.com","20c4a8c482",454369,"dl5cQkcLXF9XRBoBW1YeUFlaD29AV1VBDFtb",0.0,197,new Date().getTime(),"","","","",""])</script></body>
+</html>
